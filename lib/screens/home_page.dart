@@ -1,3 +1,4 @@
+import 'package:buy_tickets_design/widgets/exhibition_bottom_sheet/exhibition_bottom_sheet.dart';
 import 'package:buy_tickets_design/widgets/header.dart';
 import 'package:buy_tickets_design/widgets/sliding_cards/sliding_cards.dart';
 import 'package:buy_tickets_design/widgets/tabs/tabs.dart';
@@ -22,7 +23,8 @@ class HomePage extends StatelessWidget {
                 SlidingCardsView(),
               ],
             ),
-          )
+          ),
+          ExhibitionBottomSheet()
         ],
       ),
     );

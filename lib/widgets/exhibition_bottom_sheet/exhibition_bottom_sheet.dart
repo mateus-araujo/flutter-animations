@@ -2,6 +2,7 @@ import 'dart:math' as math;
 import 'dart:ui';
 
 import 'package:buy_tickets_design/models/event.dart';
+import 'package:buy_tickets_design/widgets/exhibition_bottom_sheet/expanded_event_item.dart';
 import 'package:buy_tickets_design/widgets/exhibition_bottom_sheet/menu_button.dart';
 import 'package:buy_tickets_design/widgets/exhibition_bottom_sheet/sheet_header.dart';
 import 'package:flutter/material.dart';
@@ -91,6 +92,7 @@ class _ExhibitionBottomSheetState extends State<ExhibitionBottomSheet>
                     fontSize: headerFontSize,
                     topMargin: headerTopMargin,
                   ),
+                  ...events.map((event) => _buildFullItem(event)),
                   ...events.map((event) => _buildIcon(event)),
                 ],
               ),
@@ -121,6 +123,19 @@ class _ExhibitionBottomSheetState extends State<ExhibitionBottomSheet>
           alignment: Alignment(lerp(1, 0)!, 0),
         ),
       ),
+    );
+  }
+
+  Widget _buildFullItem(Event event) {
+    int index = events.indexOf(event);
+
+    return ExpandedEventItem(
+      borderRadius: itemBorderRadius,
+      event: event,
+      height: iconSize,
+      isVisible: _controller.status == AnimationStatus.completed,
+      leftMargin: iconLeftMargin(index),
+      topMargin: iconTopMargin(index),
     );
   }
 

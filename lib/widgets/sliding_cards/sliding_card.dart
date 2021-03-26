@@ -34,7 +34,7 @@ class SlidingCard extends StatelessWidget {
                 'assets/$assetName',
                 height: MediaQuery.of(context).size.height * 0.3,
                 alignment: Alignment(-offset.abs(), 0),
-                fit: BoxFit.none,
+                fit: BoxFit.cover,
               ),
             ),
             SizedBox(height: 8),

@@ -1,3 +1,4 @@
+import 'package:buy_tickets_design/models/event.dart';
 import 'package:buy_tickets_design/widgets/sliding_cards/sliding_card.dart';
 import 'package:flutter/material.dart';
 
@@ -8,17 +9,11 @@ class SlidingCardsView extends StatefulWidget {
 
 class _SlidingCardsViewState extends State<SlidingCardsView> {
   PageController _pageController = PageController(viewportFraction: 0.8);
-  double pageOffset = 0;
+  int currentPage = 0;
 
   @override
   void initState() {
     super.initState();
-
-    _pageController.addListener(
-      () => {
-        setState(() => pageOffset = _pageController.page!),
-      },
-    );
   }
 
   @override
@@ -31,23 +26,31 @@ class _SlidingCardsViewState extends State<SlidingCardsView> {
   Widget build(BuildContext context) {
     return SizedBox(
       height: MediaQuery.of(context).size.height * 0.55,
-      child: PageView(
+      child: PageView.builder(
+        itemCount: events.length,
         controller: _pageController,
-        children: <Widget>[
-          SlidingCard(
-            name: 'Shenzhen GLOBAL DESIGN AWARD 2018',
-            date: '4.20-30',
-            assetName: 'steve-johnson.jpeg',
-            offset: pageOffset,
-          ),
-          SlidingCard(
-            name: 'Dawan District, Guangdong Hong Kong and Macao',
-            date: '4.28-31',
-            assetName: 'rodion-kutsaev.jpeg',
-            offset: pageOffset - 1,
-          ),
-        ],
+        onPageChanged: (value) => setState(() => currentPage = value),
+        itemBuilder: (context, index) =>
+            _buildSlidingCard(events[index], index),
       ),
+    );
+  }
+
+  Widget _buildSlidingCard(Event event, int index) {
+    return AnimatedBuilder(
+      animation: _pageController,
+      builder: (context, child) {
+        double offset = 0;
+        if (_pageController.position.haveDimensions)
+          offset = _pageController.page! - index;
+
+        return SlidingCard(
+          name: event.title,
+          date: event.date,
+          assetName: event.assetName,
+          offset: offset,
+        );
+      },
     );
   }
 }
